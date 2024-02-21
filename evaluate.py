@@ -27,6 +27,20 @@ def predict_sequence(model, tokenizer, source):
 
   return ' '.join(target)
 
+def predict_sequence1(model, tokenizer, source):
+  prediction = model.predict(source, verbose=0)[0]
+  integers = [np.argmax(vector) for vector in prediction]
+
+  target = list()
+  for i in integers:
+    word = word_for_id(i, tokenizer)
+    if word is None:
+      break
+    target.append(word)
+
+  return ' '.join(target)
+
+
 def evaluate_model(model, sources, raw_dataset, fr_tokenizer):
   actual, predicted = list(), list()
   for i, source in enumerate(sources):
